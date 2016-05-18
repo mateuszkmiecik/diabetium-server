@@ -1,5 +1,4 @@
 var memory = {
-	entries: []
 };
 
 
@@ -8,6 +7,9 @@ exports.getMemory = function getMemory() {
 };
 
 
-exports.setEntries = function setEntries(entries) {
-	memory.entries = entries;
+exports.setEntries = function setEntries(data) {
+	if(!memory[data.clientId]){
+		memory[data.clientId] = {};
+	}
+	memory[data.clientId].entries = data.entries;
 };

@@ -29,8 +29,12 @@ app.get('/get', function (req, res) {
 
 
 app.post('/post', function(req, res){
-    localMemory.setEntries(req.body);
-    res.send({status: "ok"});
+    if(!req.body.clientId || !req.body.entries){
+        res.status(400).send({status: 'bad request', message: 'Posted data should contain clientId and entries fields.'});
+    } else {
+        localMemory.setEntries(req.body);
+        res.send({status: "ok"});
+    }
 });
 
 app.listen(process.env.PORT || '3000', function () {
