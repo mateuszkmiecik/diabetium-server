@@ -1,2 +1,2 @@
-/node_modules
-/entries/entriesDatabase
+node_modules/
+*.log
