@@ -1,7 +1,14 @@
-
+var bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
-var fs = require('fs');
+
+var localMemory = require('./memory');
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -10,37 +17,22 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function (req, res) {
-    res.send('Server default page');
+    res.send({
+        name: "diabetium-server",
+        about: "Application server for synchronizing data from Diabetium app for Android"
+    });
 })
 
 app.get('/get', function (req, res) {
-    res.send('Got GET Request');
-    console.log('GET working')
+    res.send(localMemory.getMemory());
 });
 
 
-var myPromiseTask = function(filename, content){
-    return new Promise(function(resolve, reject){
-        fs.writeFile(filename, content, function(err){
-            if(err) return reject(err);
-            return resolve('saved');
-        })
-    });
-};
-
-app.post('/test', function (req, res) {
-    var entries = req.body;
-    myPromiseTask('entries/entriesDatabase', entries).then(function(result){
-        console.log(result);
-        res.send('Got a POST request');
-    }).then(function (jedynka) {
-        console.log(jedynka);
-    });
-    console.log('POST working');
+app.post('/post', function(req, res){
+    localMemory.setEntries(req.body);
+    res.send({status: "ok"});
 });
 
 app.listen(process.env.PORT || '3000', function () {
     console.log('Listening on port 3000')
 });
-
-
