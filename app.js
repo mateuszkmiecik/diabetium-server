@@ -23,9 +23,19 @@ app.get('/', function (req, res) {
     });
 })
 
+app.get('/get/:id', function (req, res) {
+    var entries = localMemory.getOne(req.params.id);
+    if(!entries){
+        return res.status(404).send({status: "ClientID not found"});
+    }else{
+        res.send(entries);
+    }
+});
+
 app.get('/get', function (req, res) {
     res.send(localMemory.getMemory());
 });
+
 
 
 app.post('/post', function(req, res){
