@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+        body {
+            padding: 50px;
+            font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
+        }
+
+        a {
+            color: #00B7FF
+        }
+        
+        button {
+            padding: 10px;
+            background: #ddd;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background: #eee;
+        }
+
+        ul {
+            list-style: none;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar {
+            float: left;
+            width: 20%;
+        }
+
+        .content {
+            width: 75%;
+            margin-left: 20%;
+        }
+    </style>
+</head>
+<body ng-app="ds">
+
+
+<div ng-controller="Main">
+    <div class="sidebar">
+        <ul>
+            <li ng-repeat="c in data.clientIds">
+                <button ng-click="choose(c)">{{c}}</button>
+            </li>
+        </ul>
+    </div>
+    <div class="content">
+        <p ng-if="!selected">Choose id from sidebar.</p>
+        <p ng-if="selected">
+            <canvas ng-if="chartData" id="line" class="chart chart-line" chart-data="chartData"
+                    chart-labels="labels" chart-legend="true"
+                    chart-click="onClick" >
+            </canvas>
+        </p>
+    </div>
+</div>
+
+
+<script src="angular.js"></script>
+
+<script src="bower_components/Chart.js/Chart.js"></script>
+<script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
+<script src="app.js"></script>
+
+
+</body>
+</html>
