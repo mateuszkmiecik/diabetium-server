@@ -8,7 +8,7 @@ exports.getMemory = function getMemory() {
 
 exports.getOne = function getOne(id){
 	return memory[id];
-}
+};
 
 
 exports.setEntries = function setEntries(data) {
@@ -16,4 +16,10 @@ exports.setEntries = function setEntries(data) {
 		memory[data.clientId] = {};
 	}
 	memory[data.clientId].entries = data.entries;
+};
+
+exports.clear = function () {
+	Object.keys(memory).forEach(function (k) {
+		delete memory[k];
+	})
 };

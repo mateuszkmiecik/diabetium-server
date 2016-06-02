@@ -39,6 +39,10 @@ app.get('/get', function (req, res) {
     res.send(localMemory.getMemory());
 });
 
+app.get('/flush', function (req, res) {
+    localMemory.clear();
+    res.redirect('/');
+});
 
 
 app.post('/post', function(req, res){
